@@ -1,8 +1,8 @@
 {% set name = "lzo" %}
-{% set version = "2.09" %}
+{% set version = "2.10" %}
 {% set version_major = "2" %}
 {% set hash_type = "sha256" %}
-{% set hash_val = "f294a7ced313063c057c504257f437c8335c41bfeed23531ee4e6a2b87bcb34c" %}
+{% set hash_val = "c0f892943208266f9b6543b3ae308fab6284c5c90e627931446fb49b4221a072" %}
 
 package:
   name: {{ name }}
@@ -18,24 +18,16 @@ source:
 
 build:
   number: 0
+  skip: True  # [win and py35]
   features:
     - vc9   # [win and py27]
-    - vc10  # [win and py34]
-    - vc14  # [win and py>=35]
+    - vc14  # [win and py36]
 
 requirements:
   build:
     - toolchain
     - cmake 3.*
     - python     # [win]
-    - vc 9       # [win and py27]
-    - vc 10      # [win and py34]
-    - vc 14      # [win and py>=35]
-
-  run:
-    - vc 9       # [win and py27]
-    - vc 10      # [win and py34]
-    - vc 14      # [win and py>=35]
 
 test:
   commands:
