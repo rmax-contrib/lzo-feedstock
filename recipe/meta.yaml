@@ -14,7 +14,7 @@ source:
   {{ hash_type }}: {{ hash_val }}
   patches:
     # Patch imported from https://github.com/Microsoft/vcpkg/tree/ed8e7ca79dad5b7bcf716efe25d975571e8e8c05/ports/lzo
-    - do-not-declare-setargv.patch  # [win]
+    #- do-not-declare-setargv.patch  # [win]
 
 build:
   number: 0
@@ -28,6 +28,12 @@ requirements:
     - toolchain
     - cmake 3.*
     - python     # [win]
+    - vc 9       # [win and py27]
+    - vc 14      # [win and py36]
+
+  run:
+    - vc 9       # [win and py27]
+    - vc 14      # [win and py36]
 
 test:
   commands:
@@ -37,7 +43,8 @@ test:
     - test -f ${PREFIX}/lib/liblzo{{ version_major }}.so                      # [linux]
     - if not exist %PREFIX%\\Library\\include\\lzo\\lzoconf.h exit 1          # [win]
     - if not exist %PREFIX%\\Library\\lib\\lzo{{ version_major }}.lib exit 1  # [win]
-    - if not exist %PREFIX%\\Library\\lib\\lzo{{ version_major }}.dll exit 1  # [win]
+    - if not exist %PREFIX%\\Library\\lib\\lzo{{ version_major }}_dllimport.lib exit 1  # [win]
+    - if not exist %PREFIX%\\Library\\bin\\lzo{{ version_major }}.dll exit 1  # [win]
     - conda inspect linkages -p $PREFIX {{ name }}                            # [unix]
     - conda inspect objects -p $PREFIX {{ name }}                             # [osx]
 
